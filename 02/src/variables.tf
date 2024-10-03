@@ -1,5 +1,28 @@
 ###cloud vars
 
+variable "organisation" {
+  type        = string
+  default = "netology"
+  description = "organisation"
+}
+
+variable "stage_dev" {
+  type        = string
+  default = "develop"
+  description = "Stage fore developement"
+}
+
+variable "progect" {
+  type        = string
+  default = "platform"
+  description = "Project name"
+}
+
+variable "vm_type" {
+  type        = list(string)
+  default = [ "web", "db" ]
+  description = "Project name"
+}
 
 variable "cloud_id" {
   type        = string
