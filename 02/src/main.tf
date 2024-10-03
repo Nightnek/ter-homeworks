@@ -23,9 +23,14 @@ resource "yandex_compute_instance" "platform" {
   platform_id = var.vm_web_platform_id
   allow_stopping_for_update = true
   resources {
-    cores         = var.vm_web_cpu_count
+    cores = var.vms_resources.web.cores
+    memory = var.vms_resources.web.memory
+    core_fraction = var.vms_resources.web.core_fraction
+    
+    
+    /* cores         = var.vm_web_cpu_count
     memory        = var.vm_web_ram_count
-    core_fraction = var.vm_web_core_fraction
+    core_fraction = var.vm_web_core_fraction */
   }
   boot_disk {
     initialize_params {
@@ -41,8 +46,8 @@ resource "yandex_compute_instance" "platform" {
   }
 
   metadata = {
-    serial-port-enable = var.vm_web_serial-port-enable
-    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    serial-port-enable = var.ssh_key.metadata.serial-port-enable
+    ssh-keys           = "ubuntu:${var.ssh_key.metadata.ssh-keys}"
   }
 
 }
@@ -53,9 +58,15 @@ resource "yandex_compute_instance" "netology-develop-platform-db" {
   zone = var.zone_b
   allow_stopping_for_update = true
   resources {
-    cores         = var.vm_db_cpu_count
+    cores = var.vms_resources.db.cores
+    memory = var.vms_resources.db.memory
+    core_fraction = var.vms_resources.db.core_fraction
+
+
+  /*  cores         = var.vm_db_cpu_count
     memory        = var.vm_db_ram_count
-    core_fraction = var.vm_db_core_fraction
+    core_fraction = var.vm_db_core_fraction */
+
   }
   boot_disk {
     initialize_params {
@@ -71,8 +82,8 @@ resource "yandex_compute_instance" "netology-develop-platform-db" {
   }
 
   metadata = {
-    serial-port-enable = var.vm_db_serial-port-enable
-    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    serial-port-enable = var.ssh_key.metadata.serial-port-enable
+    ssh-keys           = "ubuntu:${var.ssh_key.metadata.ssh-keys}"
   }
 
 }

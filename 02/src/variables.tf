@@ -53,23 +53,49 @@ variable "vpc_name" {
   description = "VPC network & subnet name"
 }
 
-variable "vm_web_cpu_count" {
-  type        = number
-  default     = 2
-  description = "Count of CPUs"
+variable "vms_resources" {
+  type = map(object({
+    cores = number
+    memory = number
+    core_fraction = number
+    hdd_size = number
+    hdd_type = string
+  }))
+  default = {
+    web={
+    cores=2
+    memory=1
+    core_fraction=20
+    hdd_size=5
+    hdd_type="network-hdd"
+  },
+  db= {
+    cores=2
+    memory=2
+    core_fraction=20
+    hdd_size=5
+    hdd_type="network-hdd"
+  }
+}
 }
 
-variable "vm_web_ram_count" {
-  type        = number
-  default     = 1
-  description = "Value of RAM"
-}
+# variable "vm_web_cpu_count" {
+#   type        = number
+#   default     = 2
+#   description = "Count of CPUs"
+# }
 
-variable "vm_web_core_fraction" {
-  type        = number
-  default     = 20
-  description = "core_fraction"
-}
+# variable "vm_web_ram_count" {
+#   type        = number
+#   default     = 1
+#   description = "Value of RAM"
+# }
+
+# variable "vm_web_core_fraction" {
+#   type        = number
+#   default     = 20
+#   description = "core_fraction"
+# }
 
 variable "vm_web_platform_id" {
   type        = string
@@ -101,16 +127,29 @@ variable "vm_web_nat" {
   description = "Should we have nat or not"
 }
 
-variable "vm_web_serial-port-enable" {
-  type        = string
-  default     = "1"
-  description = "Should we enable serial port"
-}
+# variable "vm_web_serial-port-enable" {
+#   type        = string
+#   default     = "1"
+#   description = "Should we enable serial port"
+# }
 
 ###ssh vars
 
-variable "vms_ssh_root_key" {
-  type        = string
-  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDMDBucc4dn0yIez/OhPBwwh24sSul30kOPBHt1jKrbcQb5/+PGBuZWOVzsmPYb23SPuxHNt8XbxNOlOf7SU5QdF4y4btKZJncC0G73WUUx+12ZKVsGu69E7grEYvfS4RTpB7nZj6OyTHTN3KvBVBChVtZnNsx7R9wTQQjTl81EzBGqKyaI7lVAs+CwkBr1K1aWigi+0Ys/1FsJdamkdvsbRaJQtpT4QkNoXU/TuS9qJDHtlxMSNb8GFJSHzHKTjBRdGKPS0KhVOZbm1tNqV0DDxkD5PG53MywrjYLBWA7wlz/VEwZ6R1wW/6QwZbl50b9qAR6ZSvV83DUj4v+2rSyz/D3K6jlXUTsLcfAygMyqyp34vsshY3iMQDIYwj7cZp3Jk1h8V0d2WWMUG5BLDFcaYUK+wnlbFxrf7rkVYbZoYcUMj7Pex0nAckpziS7jJKbPctROBb7BBX7ptKoIggYFpqy/3xnKXeQEmcTRY2MW1I/n0FUwPLekeaCH3P808oU= g-l-s@Nightnek_laptop"
-  description = "ssh-keygen -t ed25519"
+# variable "vms_ssh_root_key" {
+#   type        = string
+#   default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDMDBucc4dn0yIez/OhPBwwh24sSul30kOPBHt1jKrbcQb5/+PGBuZWOVzsmPYb23SPuxHNt8XbxNOlOf7SU5QdF4y4btKZJncC0G73WUUx+12ZKVsGu69E7grEYvfS4RTpB7nZj6OyTHTN3KvBVBChVtZnNsx7R9wTQQjTl81EzBGqKyaI7lVAs+CwkBr1K1aWigi+0Ys/1FsJdamkdvsbRaJQtpT4QkNoXU/TuS9qJDHtlxMSNb8GFJSHzHKTjBRdGKPS0KhVOZbm1tNqV0DDxkD5PG53MywrjYLBWA7wlz/VEwZ6R1wW/6QwZbl50b9qAR6ZSvV83DUj4v+2rSyz/D3K6jlXUTsLcfAygMyqyp34vsshY3iMQDIYwj7cZp3Jk1h8V0d2WWMUG5BLDFcaYUK+wnlbFxrf7rkVYbZoYcUMj7Pex0nAckpziS7jJKbPctROBb7BBX7ptKoIggYFpqy/3xnKXeQEmcTRY2MW1I/n0FUwPLekeaCH3P808oU= g-l-s@Nightnek_laptop"
+#   description = "ssh-keygen -t ed25519"
+# }
+
+variable "ssh_key" {
+  type = map(object({
+    serial-port-enable = string
+    ssh-keys = string
+  }))
+  default = {
+    metadata = {
+      serial-port-enable = "1"
+      ssh-keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDMDBucc4dn0yIez/OhPBwwh24sSul30kOPBHt1jKrbcQb5/+PGBuZWOVzsmPYb23SPuxHNt8XbxNOlOf7SU5QdF4y4btKZJncC0G73WUUx+12ZKVsGu69E7grEYvfS4RTpB7nZj6OyTHTN3KvBVBChVtZnNsx7R9wTQQjTl81EzBGqKyaI7lVAs+CwkBr1K1aWigi+0Ys/1FsJdamkdvsbRaJQtpT4QkNoXU/TuS9qJDHtlxMSNb8GFJSHzHKTjBRdGKPS0KhVOZbm1tNqV0DDxkD5PG53MywrjYLBWA7wlz/VEwZ6R1wW/6QwZbl50b9qAR6ZSvV83DUj4v+2rSyz/D3K6jlXUTsLcfAygMyqyp34vsshY3iMQDIYwj7cZp3Jk1h8V0d2WWMUG5BLDFcaYUK+wnlbFxrf7rkVYbZoYcUMj7Pex0nAckpziS7jJKbPctROBb7BBX7ptKoIggYFpqy/3xnKXeQEmcTRY2MW1I/n0FUwPLekeaCH3P808oU= g-l-s@Nightnek_laptop"
+    }
+  }
 }

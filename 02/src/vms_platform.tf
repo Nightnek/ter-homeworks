@@ -18,23 +18,23 @@ variable "vpc_name_b" {
   description = "VPC network & subnet name"
 }
 
-variable "vm_db_cpu_count" {
-  type        = number
-  default     = 2
-  description = "Count of CPUs"
-}
+# variable "vm_db_cpu_count" {
+#   type        = number
+#   default     = 2
+#   description = "Count of CPUs"
+# }
 
-variable "vm_db_ram_count" {
-  type        = number
-  default     = 2
-  description = "Value of RAM"
-}
+# variable "vm_db_ram_count" {
+#   type        = number
+#   default     = 2
+#   description = "Value of RAM"
+# }
 
-variable "vm_db_core_fraction" {
-  type        = number
-  default     = 20
-  description = "core_fraction"
-}
+# variable "vm_db_core_fraction" {
+#   type        = number
+#   default     = 20
+#   description = "core_fraction"
+# }
 
 variable "vm_db_platform_id" {
   type        = string
