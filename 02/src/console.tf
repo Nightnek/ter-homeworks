@@ -7,6 +7,7 @@ locals {
     admin = "John"
     user  = "Alex"
   }
+my_key = keys(local.test_map)
 
   servers = {
     develop = {
@@ -28,5 +29,8 @@ locals {
       disks = ["vda", "vdb", "vdc", "vdd"]
     }
   }
+
+value = "${local.test_map.admin} is ${local.my_key[0]} for ${local.test_list[2]} server based on OS ${local.servers.production.image} with ${local.servers.production.cpu} vcpu, ${local.servers.production.ram} ram, and ${length(local.servers.production.disks)} virtual disks"
+  
 }
 
