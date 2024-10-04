@@ -153,3 +153,18 @@ variable "ssh_key" {
     }
   }
 }
+
+variable "test" {
+  type = map(set(string))
+  test = {
+    web = [
+      "ssh -o 'StrictHostKeyChecking=no' ubuntu@${yandex_compute_instance.platform.network_interface[0].nat_ip_address}",
+      "${yandex_compute_instance.platform.network_interface[0].ip_address}",
+    ]
+
+    db = [
+      "ssh -o 'StrictHostKeyChecking=no' ubuntu@${yandex_compute_instance.netology-develop-platform-db.network_interface[0].nat_ip_address}",
+      "${yandex_compute_instance.netology-develop-platform-db.network_interface[0].ip_address}",
+    ]
+  }
+}

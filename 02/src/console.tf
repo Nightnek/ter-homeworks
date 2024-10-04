@@ -33,4 +33,3 @@ my_key = keys(local.test_map)
 value = "${local.test_map.admin} is ${local.my_key[0]} for ${local.test_list[2]} server based on OS ${local.servers.production.image} with ${local.servers.production.cpu} vcpu, ${local.servers.production.ram} ram, and ${length(local.servers.production.disks)} virtual disks"
   
 }
-
