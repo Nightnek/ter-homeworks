@@ -87,3 +87,7 @@ resource "yandex_compute_instance" "netology-develop-platform-db" {
   }
 
 }
+
+output "out" {
+   value = local.test
+}

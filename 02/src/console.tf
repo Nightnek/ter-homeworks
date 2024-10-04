@@ -32,4 +32,25 @@ my_key = keys(local.test_map)
 
 value = "${local.test_map.admin} is ${local.my_key[0]} for ${local.test_list[2]} server based on OS ${local.servers.production.image} with ${local.servers.production.cpu} vcpu, ${local.servers.production.ram} ram, and ${length(local.servers.production.disks)} virtual disks"
   
-}
+
+   test = [
+   #  type = object({
+   #       name: tuple([
+   #           string,
+   #           string,
+   #       ])
+   #  })
+   {
+     web = [
+       "ssh -o 'StrictHostKeyChecking=no' ubuntu@${yandex_compute_instance.platform.network_interface[0].nat_ip_address}",
+       "${yandex_compute_instance.platform.network_interface[0].ip_address}",
+     ]
+   },
+   {
+     db = [
+       "ssh -o 'StrictHostKeyChecking=no' ubuntu@${yandex_compute_instance.netology-develop-platform-db.network_interface[0].nat_ip_address}",
+       "${yandex_compute_instance.netology-develop-platform-db.network_interface[0].ip_address}",
+     ]
+   },
+ ]
+ }
