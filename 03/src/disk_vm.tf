@@ -1,11 +1,11 @@
-data "yandex_compute_disk" "second_disk" {
+resource "yandex_compute_disk" "empty-disk" {
     count = 3
-    name = "disk_${count.index+1}"
+    name = "disk-${count.index+1}"
+    size = var.disk_size
 }
 
 resource "yandex_compute_instance" "storage" {
     depends_on = [ yandex_compute_instance.web ]
-    for_each = data.yandex_compute_disk.second_disk
     name = "storage"
     platform_id = var.vm_platform_id
     allow_stopping_for_update = var.allow_stopping_for_update
@@ -23,8 +23,11 @@ resource "yandex_compute_instance" "storage" {
         }
     }
 
-    secondary_disk {
-      disk_id = each.key
+    dynamic "secondary_disk" {
+        for_each = "${yandex_compute_disk.empty-disk.*.id}"
+        content {
+          disk_id = yandex_compute_disk.empty-disk["${secondary_disk.key}"].id
+        }
     }
 
     scheduling_policy {

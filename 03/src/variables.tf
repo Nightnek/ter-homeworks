@@ -6,11 +6,13 @@ variable "token" {
 
 variable "cloud_id" {
   type        = string
+  default = "b1gua5vm4htrvegtvhce"
   description = "https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id"
 }
 
 variable "folder_id" {
   type        = string
+  default = "b1gpf79u52rvts6oo1mn"
   description = "https://cloud.yandex.ru/docs/resource-manager/operations/folder/get-id"
 }
 
@@ -104,6 +106,13 @@ variable "vm_web_nat" {
   default     = true
   description = "nat or not"
 }
+
+variable "disk_size" {
+  type        = number
+  default     = 1
+  description = "In GB"
+}
+
 
 variable "each_vm" {
   type = list(object({  vm_name=string, cpu=number, ram=number, disk_volume=number }))
