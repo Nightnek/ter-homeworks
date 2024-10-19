@@ -1,4 +1,4 @@
-resource "yandex_compute_instance" "web1" {
+resource "yandex_compute_instance" "db" {
     depends_on = [ yandex_compute_instance.web ]
     for_each = {
         for key, value in var.each_vm:
